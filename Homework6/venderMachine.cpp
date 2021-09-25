@@ -17,6 +17,7 @@ int storedTens = 100;
 int storedFives = 100;
 int storedTwos = 100;
 int storedOnes = 100;
+int storedAmount = 0;
 //resetGlobalValues function is used for resetting the global variables after each transaction.
 resetGlobalValues()
 {
@@ -84,19 +85,21 @@ int main()
 	}
 	// after entering more or equal money, system will calculate the direct balance.
 	balance = userValue - productPrice;
+	storedAmount = countValues(storedTens, storedFives, storedTwos, storedOnes);
+	cout<< "\nstored amount: " << storedAmount;
 	// if the balance is not zero and if there is enough money in vender machine it will starts to calculate the balance in coins using coutCoinsMethod.
-	if(balance != 0 && canTransactionDone)
+	if(canTransactionDone && storedAmount >= balance)
 	{
 		cout << "\nYour balance is: " << balance;
 		countCoins(balance);
 		if(countTens != 0)
 			cout << "\nNumber of 10s: " << countTens << "\n";
 		if(countFives != 0)
-			cout << "Number of 5s: " << countFives << "\n";
+			cout << "\nNumber of 5s: " << countFives << "\n";
 		if(countTwos != 0)
-			cout << "Number of 2s: " << countTwos << "\n";
+			cout << "\nNumber of 2s: " << countTwos << "\n";
 		if(countOnes != 0)
-			cout << "Number of 1s: " << countOnes << "\n";
+			cout << "\nNumber of 1s: " << countOnes << "\n";
 	}
 	else if(balance == 0)
 	{
@@ -159,43 +162,49 @@ countCoins(int value)
 	// couting number of 10 coins if available
 	if(storedTens <= countTens)
 	{
-		int currentTens = countTens - storedTens;
-		countTens = currentTens;
-		remainder = value % (10*currentTens);
+		cout << "remainder: " <<value;
+		countTens = storedTens;
+		remainder = value - (10*storedTens);
+		storedTens = 0;
+		cout << "remainder: " <<remainder;
 	}
 	else
 	{
-		countTens = value / 10;
 		remainder = value % 10;
+		storedTens -= countTens;
 	}
 	countFives = remainder / 5;
 	// couting number of 5 coins if available
-	if(storedFives <= countFives)
+	if(storedFives < countFives)
 	{
-		int currentFives = countFives - storedFives;
-		countFives = currentFives;
-		remainder = value % (5*currentFives);
+		countFives = storedFives;
+		remainder = remainder - (5*storedFives);
+		storedFives = 0;
 	}
 	else
 	{
 		remainder = remainder % 5;
+		storedFives -= countFives;
+		
 	}
 	// couting number of 2 coins if available
 	countTwos = remainder / 2;
-	if(storedTwos <= countTwos)
+	if(storedTwos < countTwos)
 	{
-		int currentTwos = countTwos - storedTwos;
-		countTwos = currentTwos;
-		remainder = value % (2*currentTwos);
+		countTwos = storedTwos;
+		remainder = remainder - (2*storedTwos);
+		storedTwos = 0;
 	}
 	else
 	{
 		remainder = remainder % 2;
+		storedTwos -= countTwos;
 	}
 	
 	if(storedOnes >= remainder)
 	{
 		countOnes = remainder;
+		storedOnes -= remainder;
 	}
 	else
 	{		
