@@ -52,9 +52,9 @@ int main()
 	{
 	int tens, fives, twos, ones;
 	cout << "Product 1 : Enter 1\n";
-	cout << "Product 2 : Enter 1\n";
-	cout << "Product 3 : Enter 1\n";
-	cout << "Product 4 : Enter 1\n";
+	cout << "Product 2 : Enter 2\n";
+	cout << "Product 3 : Enter 3\n";
+	cout << "Product 4 : Enter 4\n";
 	cout << "Enter the product Number : ";
 	cin >> ProductNumber;
 	// using setting product price method - to assign our item no and price to global variables
@@ -98,9 +98,13 @@ int main()
 		if(countOnes != 0)
 			cout << "Number of 1s: " << countOnes << "\n";
 	}
+	else if(balance == 0)
+	{
+		cout << "\nTransaction successful\nThank you!";
+	}
 	else
 	{
-		cout << "\nYour transaction cannot be proceed due to an internal issue\nThank you!";
+		cout << "\nYour transaction cannot be proceed due to an internal issue\nThank you";
 	}
 	int pword;
 	cout << "\n.....................................................................................................\n";
@@ -153,7 +157,7 @@ countCoins(int value)
 	int remainder = 0;
 	countTens = value / 10;
 	// couting number of 10 coins if available
-	if(storedTens < countTens)
+	if(storedTens <= countTens)
 	{
 		int currentTens = countTens - storedTens;
 		countTens = currentTens;
@@ -166,7 +170,7 @@ countCoins(int value)
 	}
 	countFives = remainder / 5;
 	// couting number of 5 coins if available
-	if(storedFives < countFives)
+	if(storedFives <= countFives)
 	{
 		int currentFives = countFives - storedFives;
 		countFives = currentFives;
@@ -178,7 +182,7 @@ countCoins(int value)
 	}
 	// couting number of 2 coins if available
 	countTwos = remainder / 2;
-	if(storedTwos < countTwos)
+	if(storedTwos <= countTwos)
 	{
 		int currentTwos = countTwos - storedTwos;
 		countTwos = currentTwos;
